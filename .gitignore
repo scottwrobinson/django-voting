@@ -1,0 +1,14 @@
+*.pyc
+*~
+.DS_Store
+.AppleDouble
+*.swp
+*.egg-info
+*.egg
+*.EGG
+*.EGG-INFO
+bin
+build
+develop-eggs
+.hg
+.svn

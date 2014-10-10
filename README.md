@@ -76,21 +76,21 @@ Custom Template Tags
 Don't forget to load the custom tags with: `{% load voting_tags %}`
 
 - Return total votes for an object:
-  {% get_vote_count for [object] %}
+  `{% get_vote_count for [object] %}`
  
 - Get total votes for an object as a specified variable:
-  {% get_vote_count for [object] as [var] %}
+  `{% get_vote_count for [object] as [var] %}`
  
 - Get total votes for an object over a certain time period:
-  {% get_vote_count for [object] within ["days=1,minutes=30"] %}
+  `{% get_vote_count for [object] within ["days=1,minutes=30"] %}`
  
 - Get total votes for an object over a certain time period as a variable:
-  {% get_vote_count for [object] within ["days=1,minutes=30"] as [var] %}
+  `{% get_vote_count for [object] within ["days=1,minutes=30"] as [var] %}`
   
 - Get or create the pk for the given object:
-  {% get_vote_object_pk for [object] %}
+  `{% get_vote_object_pk for [object] %}`
   
 - Get or create the pk for the given object as a specified variable:
-  {% get_vote_object_pk for [object] as [var] %}
+  `{% get_vote_object_pk for [object] as [var] %}`
   
 [1]:https://github.com/thornomad/django-hitcount

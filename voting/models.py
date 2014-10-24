@@ -144,15 +144,16 @@ class Vote(models.Model):
     user = models.ForeignKey(AUTH_USER_MODEL, editable=False)
     votecount = models.ForeignKey(VoteCount, editable=False)
     direction = models.IntegerField(choices=VOTE_DIRECTIONS)
-    ip = models.GenericIPAddressField(editable=False)
+    ip_address = models.GenericIPAddressField(editable=False)
     date_created = models.DateTimeField(editable=False)
 
     class Meta:
         ordering = ( '-date_created', )    
         get_latest_by = 'date_created'
-
+        
     def __unicode__(self):
-        return u'Vote: %s' % self.pk 
+        vote_type = 'Upvote' if self.type == UPVOTE else 'Downvote'
+        return vote_type + ' by ' + str(self.user)
 
     def save(self, *args, **kwargs):
         '''

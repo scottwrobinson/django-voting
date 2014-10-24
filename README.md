@@ -4,7 +4,7 @@ Django-Voting
 Django-Voting is a basic app for tracking the number of votes placed for
 any object in the database. It provides the ability to upvote and downvote.
 
-This project is based on the [django-hitcount][1] by Damon Timm.
+This project is based on [django-hitcount][1] by Damon Timm.
 
 TODO
 ----

@@ -14,8 +14,8 @@ created_format.admin_order_field = 'date_created'
 
 
 class VoteAdmin(admin.ModelAdmin):
-    list_display = (created_format,'user','ip','votecount')
-    search_fields = ('ip',)
+    list_display = (created_format,'user','ip_address','votecount')
+    search_fields = ('ip_address',)
     date_hierarchy = 'date_created'
     actions = [ actions.delete_queryset,
                 ]

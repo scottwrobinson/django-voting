@@ -18,7 +18,7 @@ def _update_vote_count(request, votecount, direction):
     Returns True if the request was considered a Vote; returns False if not.
     '''
     user = request.user
-    ip = get_ip(request)
+    ip_address = get_ip(request)
     
     net_change = 0
 
@@ -26,12 +26,17 @@ def _update_vote_count(request, votecount, direction):
     #votes_per_ip_limit = getattr(settings, 'VOTECOUNT_VOTES_PER_IP_LIMIT', 0)
     # check limit on votes from a unique ip address (VOTECOUNT_VOTES_PER_IP_LIMIT)
     #if votes_per_ip_limit:
-    #    if qs.filter(ip__exact=ip).count() > votes_per_ip_limit:
+    #    if qs.filter(ip_address__exact=ip_address).count() > votes_per_ip_limit:
     #        return net_change, False
 
     # Check if the user already voted
     try:
         prev_vote = Vote.objects.get(user=user, votecount=votecount)
+        
+        # SLOW: Instead of deleting the old and creating a new vote, we really
+        # should just alter the old vote's direction and then change the 
+        # VoteCounts total accordingly. The VoteCount change should be done
+        # in the overridden save() method
         
         # Since the user already voted, remove it. Then check if the new vote
         # is in a different direction, and if so, create that one
@@ -44,12 +49,12 @@ def _update_vote_count(request, votecount, direction):
             # Reload VoteCount from DB since the previous delete() just changed its up/downvote totals
             votecount = VoteCount.objects.get(id=votecount.id)
             
-            vote = Vote(votecount=votecount, direction=direction, ip=get_ip(request))
+            vote = Vote(votecount=votecount, direction=direction, ip_address=get_ip(request))
             vote.user = user
             vote.save()
             net_change += direction
     except Vote.DoesNotExist:
-        vote = Vote(votecount=votecount, direction=direction, ip=get_ip(request))
+        vote = Vote(votecount=votecount, direction=direction, ip_address=get_ip(request))
         vote.user = user
         vote.save()
         net_change += direction

@@ -83,7 +83,7 @@ def update_vote_count_ajax(request):
         return json_error_response("Votes counted via POST only.")
         
     if not request.user.is_authenticated():
-        return json_error_response('You must be authenticated to vote.')
+        return HttpResponse('Unauthorized', status=401)
 
     # TODO: Should probably use a form for validating this
     # Parse inputs

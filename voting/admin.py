@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from voting.models import Vote, VoteCount
+from voting.models import Vote, VoteCount, UPVOTE, DOWNVOTE
 from voting import actions
 
 def created_format(obj):
@@ -12,13 +12,21 @@ created_format.short_description = "Date (UTC)"
 created_format.allow_tags = True
 created_format.admin_order_field = 'date_created'
 
+def direction_format(obj):
+    '''
+    Format the vote direction.
+    '''
+    return 'Upvote' if obj.direction == UPVOTE else 'Downvote'
+direction_format.short_description = 'Direction'
+direction_format.allow_tags = True
+direction_format.admin_order_field = 'direction'
+
 
 class VoteAdmin(admin.ModelAdmin):
-    list_display = (created_format,'user','ip_address','votecount')
+    list_display = (created_format, 'user', direction_format, 'ip_address','votecount')
     search_fields = ('ip_address',)
     date_hierarchy = 'date_created'
-    actions = [ actions.delete_queryset,
-                ]
+    actions = [ actions.delete_queryset, ]
 
     def __init__(self, *args, **kwargs):
         super(VoteAdmin, self).__init__(*args, **kwargs)

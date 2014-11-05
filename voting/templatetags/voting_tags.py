@@ -108,7 +108,7 @@ class GetVoteCount(template.Node):
             votes = obj.vote_sum
         
         if self.as_varname: # if user gives us a variable to return
-            context[self.as_varname] = str(votes) 
+            context[self.as_varname] = str(votes)
             return ''
         else:
             return str(votes)
@@ -164,7 +164,7 @@ class GetVoteObjectPk(template.Node):
         self.as_varname = as_varname
 
     def render(self, context):
-        ctype, object_pk = get_target_ctype_pk(context, self.object_expr)        
+        ctype, object_pk = get_target_ctype_pk(context, self.object_expr)
         obj, created = VoteCount.objects.get_or_create(content_type=ctype, 
                         object_pk=object_pk)
         
